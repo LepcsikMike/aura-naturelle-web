@@ -72,7 +72,7 @@ const Home = () => {
       </section>
 
       <section className="section-padding relative overflow-hidden">
-        <div className="container-custom">
+        <div className="container-custom my-[40px]">
           <motion.div initial={{
           opacity: 0,
           y: 20
@@ -138,7 +138,7 @@ const Home = () => {
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-1/3 h-64 bg-gradient-to-bl from-audrey-green/10 to-transparent blur-3xl"></div>
         
-        <div className="container-custom relative z-10">
+        <div className="container-custom relative z-10 my-[40px]">
           <motion.div initial={{
           opacity: 0,
           y: 20
@@ -180,7 +180,7 @@ const Home = () => {
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1487260211189-670c54da558d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80')] opacity-10 bg-cover bg-center"></div>
         <div className="absolute inset-0 bg-audrey-green/10"></div>
         
-        <div className="container-custom text-center relative z-10">
+        <div className="container-custom text-center relative z-10 my-[40px]">
           <motion.div initial={{
           opacity: 0,
           y: 20
