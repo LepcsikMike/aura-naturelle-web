@@ -14,10 +14,10 @@ const Services = () => {
           }}>
               Mis servicios
             </h1>
-            <p className="text-lg md:text-xl text-audrey-text mb-8 animate-fade-in opacity-0" style={{
+            <p style={{
             animationDelay: '0.4s',
             animationFillMode: 'forwards'
-          }}>
+          }} className="text-lg md:text-xl mb-8 animate-fade-in opacity-0 text-[#0a0d0e]/[0.54]">
               Descubre cómo podemos trabajar juntas para tu bienestar integral
             </p>
           </div>
