@@ -24,7 +24,7 @@ const About = () => {
       </section>
 
       <section className="section-padding">
-        <div className="container-custom">
+        <div className="container-custom my-[40px]">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1 animate-fade-in opacity-0" style={{
             animationDelay: '0.2s',
@@ -59,7 +59,7 @@ const About = () => {
       </section>
 
       <section className="section-padding bg-audrey-earth-light/20">
-        <div className="container-custom">
+        <div className="container-custom my-0 py-[40px]">
           <div className="max-w-3xl mx-auto">
             <SectionTitle title="Mi filosofía" centered />
             <div className="prose prose-lg max-w-none text-audrey-text animate-fade-in opacity-0" style={{
@@ -95,7 +95,7 @@ const About = () => {
       </section>
 
       <section className="section-padding">
-        <div className="container-custom">
+        <div className="container-custom my-[40px]">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="animate-fade-in opacity-0" style={{
             animationDelay: '0.4s',
