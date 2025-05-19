@@ -135,7 +135,7 @@ const Testimonials = () => {
         {/* Decorative elements */}
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1501869150797-9bbb596118ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80')] opacity-5 bg-cover bg-center"></div>
         
-        <div className="container-custom max-w-3xl relative z-10">
+        <div className="container-custom max-w-3xl relative z-10 my-[40px]">
           <motion.div initial={{
           opacity: 0,
           y: 20
