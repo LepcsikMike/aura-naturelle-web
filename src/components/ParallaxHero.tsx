@@ -22,7 +22,7 @@ const ParallaxHero = () => {
       <div 
         className="absolute inset-0 z-0" 
         style={{
-          backgroundImage: "url('/lovable-uploads/4c745010-0977-46c1-a492-eb3ed4aa9d29.png')",
+          backgroundImage: "url('/lovable-uploads/a9582a4d-a398-4560-9bc6-cc040fd9026b.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           filter: "brightness(0.9)",
@@ -86,7 +86,7 @@ const ParallaxHero = () => {
         >
           <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl transform -rotate-2 hover:rotate-0 transition-all duration-700">
             <img 
-              src="/lovable-uploads/4c745010-0977-46c1-a492-eb3ed4aa9d29.png" 
+              src="/lovable-uploads/a9582a4d-a398-4560-9bc6-cc040fd9026b.png" 
               alt="Audrey Tessier" 
               className="object-cover w-full h-full"
             />
