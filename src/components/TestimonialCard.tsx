@@ -1,12 +1,14 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 interface TestimonialCardProps {
   quote: string;
   name: string;
   role?: string;
   className?: string;
+  delay?: number;
 }
 
 const TestimonialCard: React.FC<TestimonialCardProps> = ({
@@ -14,14 +16,18 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
   name,
   role,
   className = '',
+  delay = 0.3,
 }) => {
   return (
-    <div 
+    <motion.div 
       className={cn(
-        'p-6 md:p-8 bg-white border border-audrey-earth-light/50 rounded-lg relative animate-fade-in opacity-0',
+        'p-6 md:p-8 bg-white/80 backdrop-blur-sm border border-audrey-earth-light/50 rounded-lg relative shadow-sm hover:shadow-md transition-all duration-500',
         className
       )}
-      style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7, delay }}
     >
       <div className="text-4xl text-audrey-green/30 font-serif absolute top-4 left-4">
         "
@@ -33,7 +39,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
         {name}
         {role && <span className="text-audrey-text/70 font-normal"> - {role}</span>}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
