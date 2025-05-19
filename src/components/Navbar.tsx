@@ -34,7 +34,7 @@ const Navbar = () => {
       scrolled ? 'bg-white/90 shadow-sm backdrop-blur-sm' : 'bg-transparent'
     )}>
       <div className="container-custom py-4 md:py-5 flex justify-between items-center">
-        <Link to="/" className="font-serif text-2xl md:text-3xl text-white drop-shadow-sm">
+        <Link to="/" className="font-serif text-2xl md:text-3xl text-audrey-earth-dark">
           Audrey Tessier
         </Link>
 
@@ -48,16 +48,16 @@ const Navbar = () => {
             'block w-6 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2',
             isOpen ? 'opacity-0' : 'opacity-100'
           )}>
-            <span className="block absolute h-0.5 w-6 bg-white rounded-sm"></span>
-            <span className="block absolute h-0.5 w-6 bg-white rounded-sm mt-1.5"></span>
-            <span className="block absolute h-0.5 w-6 bg-white rounded-sm mt-3"></span>
+            <span className="block absolute h-0.5 w-6 bg-audrey-earth-dark rounded-sm"></span>
+            <span className="block absolute h-0.5 w-6 bg-audrey-earth-dark rounded-sm mt-1.5"></span>
+            <span className="block absolute h-0.5 w-6 bg-audrey-earth-dark rounded-sm mt-3"></span>
           </div>
           <div className={cn(
             'transition-opacity duration-100',
             isOpen ? 'opacity-100' : 'opacity-0'
           )}>
-            <span className="block absolute h-0.5 w-6 bg-white transform rotate-45"></span>
-            <span className="block absolute h-0.5 w-6 bg-white transform -rotate-45"></span>
+            <span className="block absolute h-0.5 w-6 bg-audrey-earth-dark transform rotate-45"></span>
+            <span className="block absolute h-0.5 w-6 bg-audrey-earth-dark transform -rotate-45"></span>
           </div>
         </button>
 
@@ -68,7 +68,7 @@ const Navbar = () => {
               <li key={link.name}>
                 <Link 
                   to={link.path}
-                  className="relative text-white hover:text-audrey-green-light transition-colors duration-300 drop-shadow-sm after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-audrey-green-light after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                  className="relative text-audrey-text hover:text-audrey-green-dark transition-colors duration-300 after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-audrey-green-dark after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
                 >
                   {link.name}
                 </Link>
@@ -91,7 +91,7 @@ const Navbar = () => {
                   <Link 
                     to={link.path} 
                     onClick={() => setIsOpen(false)}
-                    className="text-white hover:text-audrey-green-dark transition-colors duration-300"
+                    className="text-audrey-earth-dark hover:text-audrey-green-dark transition-colors duration-300"
                   >
                     {link.name}
                   </Link>
