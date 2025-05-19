@@ -22,7 +22,7 @@ const ParallaxHero = () => {
       <div 
         className="absolute inset-0 z-0" 
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1606041008023-472dfb5e530f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80')",
+          backgroundImage: "url('/lovable-uploads/4b1da70c-bdb6-4332-81e1-750a4c91752c.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           filter: "brightness(0.9)",
