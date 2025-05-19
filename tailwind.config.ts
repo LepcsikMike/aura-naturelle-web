@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,26 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Custom colors for Audrey Tessier's website
+				audrey: {
+					green: {
+						light: '#E0EAD7', // Light sage green
+						DEFAULT: '#A9BE9C', // Sage green
+						dark: '#718F63', // Darker sage green
+					},
+					earth: {
+						light: '#F0E6D9', // Light beige/cream
+						DEFAULT: '#D9C0A3', // Warm earth tone
+						dark: '#9F8772', // Deeper earth tone
+					},
+					cream: '#FFFAF2', // Warm white/cream
+					text: '#4A4A4A', // Rich dark gray for text
+				},
+			},
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
+				serif: ['Cormorant Garamond', 'serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +104,22 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+				'fade-in': {
+					'0%': {
+					  opacity: '0',
+					  transform: 'translateY(10px)'
+					},
+					'100%': {
+					  opacity: '1',
+					  transform: 'translateY(0)'
+					}
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.7s ease-out forwards',
 			}
 		}
 	},
