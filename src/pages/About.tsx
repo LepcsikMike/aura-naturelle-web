@@ -102,7 +102,7 @@ const About = () => {
             animationFillMode: 'forwards'
           }}>
               <div className="rounded-lg overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1546967900-1c804ae8e470?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Mi visión" className="object-cover w-full" />
+                <img alt="Mi visión" className="object-cover w-full" src="/lovable-uploads/cb249b88-df1a-4b42-94be-7fe4b27fa96d.jpg" />
               </div>
             </div>
             <div className="animate-fade-in opacity-0" style={{
