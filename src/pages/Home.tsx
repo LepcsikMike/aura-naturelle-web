@@ -31,7 +31,7 @@ const Home = () => {
         <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full bg-audrey-green/10 blur-3xl"></div>
         <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-audrey-earth-light/20 blur-3xl"></div>
         
-        <div className="container-custom relative z-10">
+        <div className="container-custom relative z-10 my-[40px]">
           <motion.div initial={{
           opacity: 0,
           y: 20
