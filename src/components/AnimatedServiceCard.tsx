@@ -20,6 +20,23 @@ const AnimatedServiceCard: React.FC<AnimatedServiceCardProps> = ({
   delay = 0.2,
   imageSrc,
 }) => {
+  // Default fallback image if the provided one fails to load
+  const [imgSrc, setImgSrc] = React.useState(imageSrc);
+  
+  // Handle image loading error
+  const handleImageError = () => {
+    console.error(`Failed to load image for: ${title}`);
+    
+    // Set a default fallback based on the title
+    if (title.includes("Energético")) {
+      setImgSrc("/images/energy-healing.jpg");
+    } else if (title.includes("Peluquería")) {
+      setImgSrc("/images/hair-salon.jpg");
+    } else {
+      setImgSrc("/placeholder.svg");
+    }
+  };
+
   return (
     <motion.div 
       className={cn(
@@ -32,18 +49,19 @@ const AnimatedServiceCard: React.FC<AnimatedServiceCardProps> = ({
       transition={{ duration: 0.7, delay }}
       whileHover={{ scale: 1.02 }}
     >
-      {imageSrc && (
+      {imgSrc && (
         <div className="absolute inset-0 z-0">
           <img 
-            src={imageSrc} 
+            src={imgSrc} 
             alt={title} 
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            onError={handleImageError}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-audrey-earth-dark/90 via-audrey-earth-dark/40 to-transparent" />
         </div>
       )}
       
-      <div className={`p-6 md:p-8 ${imageSrc ? 'text-white relative z-10' : 'bg-white/70 backdrop-blur-sm border border-audrey-earth-light/50'} rounded-xl shadow-sm hover:shadow-xl transition-shadow duration-500`}>
+      <div className={`p-6 md:p-8 ${imgSrc ? 'text-white relative z-10' : 'bg-white/70 backdrop-blur-sm border border-audrey-earth-light/50'} rounded-xl shadow-sm hover:shadow-xl transition-shadow duration-500`}>
         {icon && (
           <motion.div 
             className="mb-4 text-audrey-green"
@@ -56,11 +74,11 @@ const AnimatedServiceCard: React.FC<AnimatedServiceCardProps> = ({
           </motion.div>
         )}
         
-        <h3 className={`font-serif text-xl md:text-2xl font-medium ${imageSrc ? 'text-white' : 'text-audrey-earth-dark'} mb-3`}>
+        <h3 className={`font-serif text-xl md:text-2xl font-medium ${imgSrc ? 'text-white' : 'text-audrey-earth-dark'} mb-3`}>
           {title}
         </h3>
         
-        <p className={`${imageSrc ? 'text-white/90' : 'text-audrey-text'}`}>
+        <p className={`${imgSrc ? 'text-white/90' : 'text-audrey-text'}`}>
           {description}
         </p>
         

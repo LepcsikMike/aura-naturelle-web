@@ -58,12 +58,12 @@ const Home = () => {
             <AnimatedServiceCard 
               title="Acompañamiento Energético"
               description="Sesiones individuales para reconectar con tu esencia, liberar bloqueos emocionales y despertar tu potencial interior a través de técnicas energéticas y coaching holístico."
-              imageSrc="https://images.unsplash.com/photo-1620553967565-8e5d669b5201?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+              imageSrc="/images/energy-healing.jpg"
             />
             <AnimatedServiceCard 
               title="Peluquería Consciente"
               description="Un espacio para el cuidado de tu cabello desde un enfoque natural, respetuoso y personalizado. Utilizamos productos naturales que respetan tanto a ti como al medio ambiente."
-              imageSrc="https://images.unsplash.com/photo-1580618864482-298c5c5d231f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+              imageSrc="/images/hair-salon.jpg"
               delay={0.3}
             />
           </div>

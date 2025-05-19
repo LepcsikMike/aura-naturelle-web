@@ -21,7 +21,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
   return (
     <motion.div 
       className={cn(
-        'p-6 md:p-8 bg-white/80 backdrop-blur-sm border border-audrey-earth-light/50 rounded-lg relative shadow-sm hover:shadow-md transition-all duration-500',
+        'p-6 md:p-8 bg-white/90 backdrop-blur-sm border border-audrey-earth-light/50 rounded-lg relative shadow-sm hover:shadow-md transition-all duration-500',
         className
       )}
       initial={{ opacity: 0, y: 20 }}
@@ -29,7 +29,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       viewport={{ once: true }}
       transition={{ duration: 0.7, delay }}
     >
-      <div className="text-4xl text-audrey-green/30 font-serif absolute top-4 left-4">
+      <div className="text-4xl text-audrey-green/50 font-serif absolute top-4 left-4">
         "
       </div>
       <p className="italic text-audrey-text relative z-10 mb-4">
@@ -37,7 +37,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       </p>
       <div className="mt-4 font-medium text-audrey-earth-dark">
         {name}
-        {role && <span className="text-audrey-text/70 font-normal"> - {role}</span>}
+        {role && <span className="text-audrey-text/80 font-normal"> - {role}</span>}
       </div>
     </motion.div>
   );
