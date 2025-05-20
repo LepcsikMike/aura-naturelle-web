@@ -12,7 +12,11 @@ const ContactForm = () => {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  
+  // LiveFormHQ form identifier - replace with your actual form ID/URL
+  const LIVEFORM_ENDPOINT = "https://api.liveformhq.com/v1/forms/YOUR_FORM_ID_HERE";
+  // If you have an API key, it would be used in the authorization header
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -24,8 +28,8 @@ const ContactForm = () => {
     // Validate form
     if (!formData.name || !formData.email || !formData.message) {
       toast({
-        title: "Campos incompletos",
-        description: "Por favor, completa todos los campos obligatorios",
+        title: "Unvollständige Felder",
+        description: "Bitte füllen Sie alle erforderlichen Felder aus",
         variant: "destructive",
       });
       return;
@@ -33,14 +37,37 @@ const ContactForm = () => {
     
     setIsSubmitting(true);
     
-    // Simulate form submission
     try {
-      // Here would be the actual form submission to a backend
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Prepare form data for submission
+      const submissionData = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || 'Nicht angegeben',
+        subject: formData.subject || 'Allgemeine Anfrage',
+        message: formData.message,
+        _honey: '', // Honeypot field to prevent spam
+      };
       
+      // Send data to LiveFormHQ
+      const response = await fetch(LIVEFORM_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          // If you have an API key:
+          // 'Authorization': 'Bearer YOUR_API_KEY_HERE',
+        },
+        body: JSON.stringify(submissionData),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      
+      // Success message
       toast({
-        title: "Mensaje enviado",
-        description: "Gracias por tu mensaje. Te responderé lo antes posible.",
+        title: "Nachricht gesendet",
+        description: "Vielen Dank für Ihre Nachricht. Wir werden uns so schnell wie möglich bei Ihnen melden.",
       });
       
       // Reset form
@@ -53,9 +80,10 @@ const ContactForm = () => {
       });
       
     } catch (error) {
+      console.error("Form submission error:", error);
       toast({
-        title: "Error",
-        description: "Ha ocurrido un error. Por favor, inténtalo de nuevo.",
+        title: "Fehler",
+        description: "Es gab ein Problem beim Senden Ihrer Nachricht. Bitte versuchen Sie es später noch einmal.",
         variant: "destructive",
       });
     } finally {
@@ -68,7 +96,7 @@ const ContactForm = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-audrey-text mb-1">
-            Nombre <span className="text-red-500">*</span>
+            Name <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -132,7 +160,7 @@ const ContactForm = () => {
 
       <div>
         <label htmlFor="message" className="block text-sm font-medium text-audrey-text mb-1">
-          Mensaje <span className="text-red-500">*</span>
+          Nachricht <span className="text-red-500">*</span>
         </label>
         <textarea
           id="message"
@@ -151,7 +179,7 @@ const ContactForm = () => {
           disabled={isSubmitting}
           className="btn-primary flex items-center gap-2 disabled:opacity-70"
         >
-          {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
+          {isSubmitting ? 'Wird gesendet...' : 'Nachricht senden'}
         </button>
       </div>
     </form>
