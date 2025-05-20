@@ -38,42 +38,68 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Redirect to LiveFormHQ submission page
-      const form = e.currentTarget;
-      form.action = `https://liveformhq.com/form/${FORM_ID}`;
-      form.method = "POST";
+      // Create a form element to submit in a new tab
+      const formUrl = `https://liveformhq.com/form/${FORM_ID}`;
       
-      // Add hidden field for redirect URL after successful submission
-      const redirectInput = document.createElement("input");
-      redirectInput.type = "hidden";
-      redirectInput.name = "_redirect";
-      redirectInput.value = window.location.href; // Redirect back to the current page
-      form.appendChild(redirectInput);
+      // Create a temporary form
+      const tempForm = document.createElement('form');
+      tempForm.method = 'POST';
+      tempForm.action = formUrl;
+      tempForm.target = '_blank'; // Open in new tab
+      
+      // Add each form field
+      for (const [key, value] of Object.entries(formData)) {
+        if (value) {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = value;
+          tempForm.appendChild(input);
+        }
+      }
       
       // Add honeypot field to prevent spam
-      const honeypotInput = document.createElement("input");
-      honeypotInput.type = "hidden";
-      honeypotInput.name = "_honey";
-      honeypotInput.value = "";
-      form.appendChild(honeypotInput);
+      const honeypotInput = document.createElement('input');
+      honeypotInput.type = 'hidden';
+      honeypotInput.name = '_honey';
+      honeypotInput.value = '';
+      tempForm.appendChild(honeypotInput);
       
-      // Submit form directly
-      form.submit();
+      // Add redirect URL
+      const redirectInput = document.createElement('input');
+      redirectInput.type = 'hidden';
+      redirectInput.name = '_redirect';
+      redirectInput.value = window.location.href;
+      tempForm.appendChild(redirectInput);
       
-      // Show loading state until redirect
+      // Append form to body, submit it, and remove it
+      document.body.appendChild(tempForm);
+      tempForm.submit();
+      document.body.removeChild(tempForm);
+      
       toast({
-        title: "Enviando mensaje...",
-        description: "Por favor, espere mientras procesamos su solicitud.",
+        title: "Formulario enviado",
+        description: "Se ha abierto una nueva pestaña para completar el envío",
+      });
+      
+      // Reset form data
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
       });
       
     } catch (error) {
       console.error("Form submission error:", error);
-      setIsSubmitting(false);
       toast({
         title: "Error",
         description: "Hubo un problema al enviar su mensaje. Por favor, inténtelo de nuevo más tarde.",
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
