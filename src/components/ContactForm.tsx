@@ -14,8 +14,8 @@ const ContactForm = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // LiveFormHQ form identifier
-  const FORM_ID = "bbadab9b-11af-416c-84c8-53e5fc81c8e6";
+  // Basin form identifier
+  const BASIN_FORM_ID = "cfe60c5493e3";
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -38,8 +38,8 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Create a form element to submit in a new tab
-      const formUrl = `https://liveformhq.com/form/${FORM_ID}`;
+      // Create form data for submission
+      const formUrl = `https://usebasin.com/f/${BASIN_FORM_ID}`;
       
       // Create a temporary form
       const tempForm = document.createElement('form');
@@ -58,17 +58,17 @@ const ContactForm = () => {
         }
       }
       
-      // Add honeypot field to prevent spam
+      // Add honeypot field to prevent spam (Basin uses 'hp-<form-id>' format)
       const honeypotInput = document.createElement('input');
       honeypotInput.type = 'hidden';
-      honeypotInput.name = '_honey';
+      honeypotInput.name = `hp-${BASIN_FORM_ID}`;
       honeypotInput.value = '';
       tempForm.appendChild(honeypotInput);
       
       // Add redirect URL
       const redirectInput = document.createElement('input');
       redirectInput.type = 'hidden';
-      redirectInput.name = '_redirect';
+      redirectInput.name = 'redirect';
       redirectInput.value = window.location.href;
       tempForm.appendChild(redirectInput);
       
