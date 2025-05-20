@@ -62,7 +62,7 @@ const ContactForm = () => {
   };
 
   const subjectOptions = [
-    { value: "", label: "Selecciona una opción" },
+    { value: "default", label: "Selecciona una opción" },
     { value: "acompañamiento", label: "Acompañamiento Energético" },
     { value: "peluqueria", label: "Peluquería Consciente" },
     { value: "talleres", label: "Talleres y Grupos" },
