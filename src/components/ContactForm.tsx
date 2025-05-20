@@ -14,15 +14,15 @@ const ContactForm = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // LiveFormHQ form identifier - your actual form ID
-  const LIVEFORM_ENDPOINT = "https://api.liveformhq.com/v1/forms/bbadab9b-11af-416c-84c8-53e5fc81c8e6";
+  // LiveFormHQ form identifier
+  const FORM_ID = "bbadab9b-11af-416c-84c8-53e5fc81c8e6";
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     // Validate form
@@ -38,54 +38,42 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Prepare form data for submission
-      const submissionData = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone || 'No especificado',
-        subject: formData.subject || 'Consulta general',
-        message: formData.message,
-        _honey: '', // Honeypot field to prevent spam
-      };
+      // Redirect to LiveFormHQ submission page
+      const form = e.currentTarget;
+      form.action = `https://liveformhq.com/form/${FORM_ID}`;
+      form.method = "POST";
       
-      // Send data to LiveFormHQ
-      const response = await fetch(LIVEFORM_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify(submissionData),
-      });
+      // Add hidden field for redirect URL after successful submission
+      const redirectInput = document.createElement("input");
+      redirectInput.type = "hidden";
+      redirectInput.name = "_redirect";
+      redirectInput.value = window.location.href; // Redirect back to the current page
+      form.appendChild(redirectInput);
       
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
+      // Add honeypot field to prevent spam
+      const honeypotInput = document.createElement("input");
+      honeypotInput.type = "hidden";
+      honeypotInput.name = "_honey";
+      honeypotInput.value = "";
+      form.appendChild(honeypotInput);
       
-      // Success message
+      // Submit form directly
+      form.submit();
+      
+      // Show loading state until redirect
       toast({
-        title: "Mensaje enviado",
-        description: "Gracias por su mensaje. Nos pondremos en contacto con usted lo antes posible.",
-      });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: '',
+        title: "Enviando mensaje...",
+        description: "Por favor, espere mientras procesamos su solicitud.",
       });
       
     } catch (error) {
       console.error("Form submission error:", error);
+      setIsSubmitting(false);
       toast({
         title: "Error",
         description: "Hubo un problema al enviar su mensaje. Por favor, inténtelo de nuevo más tarde.",
         variant: "destructive",
       });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
