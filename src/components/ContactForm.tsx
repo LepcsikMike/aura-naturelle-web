@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { Button } from "@/components/ui/button";
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -15,7 +16,6 @@ const ContactForm = () => {
   
   // LiveFormHQ form identifier - replace with your actual form ID/URL
   const LIVEFORM_ENDPOINT = "https://api.liveformhq.com/v1/forms/YOUR_FORM_ID_HERE";
-  // If you have an API key, it would be used in the authorization header
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -28,8 +28,8 @@ const ContactForm = () => {
     // Validate form
     if (!formData.name || !formData.email || !formData.message) {
       toast({
-        title: "Unvollständige Felder",
-        description: "Bitte füllen Sie alle erforderlichen Felder aus",
+        title: "Campos incompletos",
+        description: "Por favor, complete todos los campos requeridos",
         variant: "destructive",
       });
       return;
@@ -42,8 +42,8 @@ const ContactForm = () => {
       const submissionData = {
         name: formData.name,
         email: formData.email,
-        phone: formData.phone || 'Nicht angegeben',
-        subject: formData.subject || 'Allgemeine Anfrage',
+        phone: formData.phone || 'No especificado',
+        subject: formData.subject || 'Consulta general',
         message: formData.message,
         _honey: '', // Honeypot field to prevent spam
       };
@@ -54,8 +54,6 @@ const ContactForm = () => {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          // If you have an API key:
-          // 'Authorization': 'Bearer YOUR_API_KEY_HERE',
         },
         body: JSON.stringify(submissionData),
       });
@@ -66,8 +64,8 @@ const ContactForm = () => {
       
       // Success message
       toast({
-        title: "Nachricht gesendet",
-        description: "Vielen Dank für Ihre Nachricht. Wir werden uns so schnell wie möglich bei Ihnen melden.",
+        title: "Mensaje enviado",
+        description: "Gracias por su mensaje. Nos pondremos en contacto con usted lo antes posible.",
       });
       
       // Reset form
@@ -82,8 +80,8 @@ const ContactForm = () => {
     } catch (error) {
       console.error("Form submission error:", error);
       toast({
-        title: "Fehler",
-        description: "Es gab ein Problem beim Senden Ihrer Nachricht. Bitte versuchen Sie es später noch einmal.",
+        title: "Error",
+        description: "Hubo un problema al enviar su mensaje. Por favor, inténtelo de nuevo más tarde.",
         variant: "destructive",
       });
     } finally {
@@ -160,7 +158,7 @@ const ContactForm = () => {
 
       <div>
         <label htmlFor="message" className="block text-sm font-medium text-audrey-text mb-1">
-          Nachricht <span className="text-red-500">*</span>
+          Mensaje <span className="text-red-500">*</span>
         </label>
         <textarea
           id="message"
@@ -174,13 +172,13 @@ const ContactForm = () => {
       </div>
 
       <div className="flex justify-end">
-        <button
+        <Button
           type="submit"
           disabled={isSubmitting}
-          className="btn-primary flex items-center gap-2 disabled:opacity-70"
+          className="bg-audrey-green hover:bg-audrey-green-dark text-white"
         >
-          {isSubmitting ? 'Wird gesendet...' : 'Nachricht senden'}
-        </button>
+          {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
+        </Button>
       </div>
     </form>
   );
