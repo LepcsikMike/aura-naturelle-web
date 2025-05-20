@@ -1,67 +1,70 @@
 
 import React from 'react';
+import { FormControl, FormField as ShadcnFormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { UseFormReturn } from 'react-hook-form';
+import { ContactFormData } from '@/hooks/useFormValidation';
 
 interface FormFieldProps {
+  form: UseFormReturn<ContactFormData>;
+  name: keyof ContactFormData;
   label: string;
-  name: string;
   type: "text" | "email" | "tel" | "textarea" | "select";
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
   required?: boolean;
   options?: { value: string; label: string }[];
 }
 
 const FormField: React.FC<FormFieldProps> = ({ 
-  label, 
+  form, 
   name, 
+  label, 
   type, 
-  value, 
-  onChange, 
   required = false,
   options = [] 
 }) => {
   return (
-    <div>
-      <label htmlFor={name} className="block text-sm font-medium text-audrey-text mb-1">
-        {label} {required && <span className="text-red-500">*</span>}
-      </label>
-      
-      {type === "textarea" ? (
-        <textarea
-          id={name}
-          name={name}
-          value={value}
-          onChange={onChange}
-          required={required}
-          rows={6}
-          className="w-full px-4 py-2 border border-audrey-earth-light rounded-md focus:ring-2 focus:ring-audrey-green focus:border-transparent outline-none transition"
-        />
-      ) : type === "select" ? (
-        <select
-          id={name}
-          name={name}
-          value={value}
-          onChange={onChange}
-          className="w-full px-4 py-2 border border-audrey-earth-light rounded-md focus:ring-2 focus:ring-audrey-green focus:border-transparent outline-none transition"
-        >
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      ) : (
-        <input
-          type={type}
-          id={name}
-          name={name}
-          value={value}
-          onChange={onChange}
-          required={required}
-          className="w-full px-4 py-2 border border-audrey-earth-light rounded-md focus:ring-2 focus:ring-audrey-green focus:border-transparent outline-none transition"
-        />
+    <ShadcnFormField
+      control={form.control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel className="text-sm font-medium text-audrey-text">
+            {label} {required && <span className="text-red-500">*</span>}
+          </FormLabel>
+          <FormControl>
+            {type === "textarea" ? (
+              <Textarea
+                {...field}
+                rows={6}
+                className="w-full px-4 py-2 border border-audrey-earth-light rounded-md focus:ring-2 focus:ring-audrey-green focus:border-transparent outline-none transition"
+              />
+            ) : type === "select" ? (
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger className="w-full px-4 py-2 border border-audrey-earth-light rounded-md focus:ring-2 focus:ring-audrey-green focus:border-transparent outline-none transition">
+                  <SelectValue placeholder={options[0]?.label || "Seleccionar"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {options.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            ) : (
+              <Input
+                type={type}
+                {...field}
+                className="w-full px-4 py-2 border border-audrey-earth-light rounded-md focus:ring-2 focus:ring-audrey-green focus:border-transparent outline-none transition"
+              />
+            )}
+          </FormControl>
+          <FormMessage />
+        </FormItem>
       )}
-    </div>
+    />
   );
 };
 

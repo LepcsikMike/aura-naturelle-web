@@ -1,52 +1,45 @@
 
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
 import FormField from './contact/FormField';
 import { submitToBasin } from '@/utils/formSubmission';
-import { useFormValidation } from '@/hooks/useFormValidation';
-
-interface ContactFormData {
-  name: string;
-  email: string;
-  phone: string;
-  subject: string;
-  message: string;
-}
+import { useFormValidation, ContactFormData, contactFormSchema } from '@/hooks/useFormValidation';
 
 const ContactForm = () => {
   const { toast } = useToast();
-  const { validateForm } = useFormValidation();
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
-  });
+  const { showValidationErrors } = useFormValidation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   // Basin form identifier
   const BASIN_FORM_ID = "cfe60c5493e3";
   
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      subject: '',
+      message: '',
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    
-    // Validate form
-    if (!validateForm(formData)) {
-      return;
-    }
-    
+  const handleSubmit = async (formData: ContactFormData) => {
     setIsSubmitting(true);
     
     try {
+      // Convert the form data to plain object to ensure [key: string]: string format
+      const formDataObject: { [key: string]: string } = {};
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataObject[key] = String(value || '');
+      });
+      
       // Submit form to Basin
-      await submitToBasin(formData, BASIN_FORM_ID);
+      await submitToBasin(formDataObject, BASIN_FORM_ID);
       
       toast({
         title: "Formulario enviado",
@@ -54,13 +47,7 @@ const ContactForm = () => {
       });
       
       // Reset form data
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: '',
-      });
+      form.reset();
       
     } catch (error) {
       console.error("Form submission error:", error);
@@ -83,63 +70,60 @@ const ContactForm = () => {
   ];
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in opacity-0" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit, showValidationErrors)} className="space-y-6 animate-fade-in opacity-0" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            form={form}
+            label="Nombre"
+            name="name"
+            type="text"
+            required
+          />
+          <FormField
+            form={form}
+            label="Email"
+            name="email"
+            type="email"
+            required
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            form={form}
+            label="Teléfono"
+            name="phone"
+            type="tel"
+          />
+          <FormField
+            form={form}
+            label="Asunto"
+            name="subject"
+            type="select"
+            options={subjectOptions}
+          />
+        </div>
+
         <FormField
-          label="Name"
-          name="name"
-          type="text"
-          value={formData.name}
-          onChange={handleChange}
+          form={form}
+          label="Mensaje"
+          name="message"
+          type="textarea"
           required
         />
-        <FormField
-          label="Email"
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <FormField
-          label="Teléfono"
-          name="phone"
-          type="tel"
-          value={formData.phone}
-          onChange={handleChange}
-        />
-        <FormField
-          label="Asunto"
-          name="subject"
-          type="select"
-          value={formData.subject}
-          onChange={handleChange}
-          options={subjectOptions}
-        />
-      </div>
-
-      <FormField
-        label="Mensaje"
-        name="message"
-        type="textarea"
-        value={formData.message}
-        onChange={handleChange}
-        required
-      />
-
-      <div className="flex justify-end">
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          className="bg-audrey-green hover:bg-audrey-green-dark text-white"
-        >
-          {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
-        </Button>
-      </div>
-    </form>
+        <div className="flex justify-end">
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-audrey-green hover:bg-audrey-green-dark text-white"
+          >
+            {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 };
 

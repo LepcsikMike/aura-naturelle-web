@@ -1,5 +1,5 @@
 
-interface FormData {
+export interface FormData {
   [key: string]: string;
 }
 
