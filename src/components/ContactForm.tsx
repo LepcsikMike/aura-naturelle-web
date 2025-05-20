@@ -2,10 +2,22 @@
 import React, { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from "@/components/ui/button";
+import FormField from './contact/FormField';
+import { submitToBasin } from '@/utils/formSubmission';
+import { useFormValidation } from '@/hooks/useFormValidation';
+
+interface ContactFormData {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
 
 const ContactForm = () => {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
+  const { validateForm } = useFormValidation();
+  const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
     phone: '',
@@ -26,56 +38,15 @@ const ContactForm = () => {
     e.preventDefault();
     
     // Validate form
-    if (!formData.name || !formData.email || !formData.message) {
-      toast({
-        title: "Campos incompletos",
-        description: "Por favor, complete todos los campos requeridos",
-        variant: "destructive",
-      });
+    if (!validateForm(formData)) {
       return;
     }
     
     setIsSubmitting(true);
     
     try {
-      // Create form data for submission
-      const formUrl = `https://usebasin.com/f/${BASIN_FORM_ID}`;
-      
-      // Create a temporary form
-      const tempForm = document.createElement('form');
-      tempForm.method = 'POST';
-      tempForm.action = formUrl;
-      tempForm.target = '_blank'; // Open in new tab
-      
-      // Add each form field
-      for (const [key, value] of Object.entries(formData)) {
-        if (value) {
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = key;
-          input.value = value;
-          tempForm.appendChild(input);
-        }
-      }
-      
-      // Add honeypot field to prevent spam (Basin uses 'hp-<form-id>' format)
-      const honeypotInput = document.createElement('input');
-      honeypotInput.type = 'hidden';
-      honeypotInput.name = `hp-${BASIN_FORM_ID}`;
-      honeypotInput.value = '';
-      tempForm.appendChild(honeypotInput);
-      
-      // Add redirect URL
-      const redirectInput = document.createElement('input');
-      redirectInput.type = 'hidden';
-      redirectInput.name = 'redirect';
-      redirectInput.value = window.location.href;
-      tempForm.appendChild(redirectInput);
-      
-      // Append form to body, submit it, and remove it
-      document.body.appendChild(tempForm);
-      tempForm.submit();
-      document.body.removeChild(tempForm);
+      // Submit form to Basin
+      await submitToBasin(formData, BASIN_FORM_ID);
       
       toast({
         title: "Formulario enviado",
@@ -103,87 +74,61 @@ const ContactForm = () => {
     }
   };
 
+  const subjectOptions = [
+    { value: "", label: "Selecciona una opción" },
+    { value: "acompañamiento", label: "Acompañamiento Energético" },
+    { value: "peluqueria", label: "Peluquería Consciente" },
+    { value: "talleres", label: "Talleres y Grupos" },
+    { value: "otro", label: "Otro" }
+  ];
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in opacity-0" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-audrey-text mb-1">
-            Name <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border border-audrey-earth-light rounded-md focus:ring-2 focus:ring-audrey-green focus:border-transparent outline-none transition"
-          />
-        </div>
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-audrey-text mb-1">
-            Email <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border border-audrey-earth-light rounded-md focus:ring-2 focus:ring-audrey-green focus:border-transparent outline-none transition"
-          />
-        </div>
+        <FormField
+          label="Name"
+          name="name"
+          type="text"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+        <FormField
+          label="Email"
+          name="email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-audrey-text mb-1">
-            Teléfono
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-audrey-earth-light rounded-md focus:ring-2 focus:ring-audrey-green focus:border-transparent outline-none transition"
-          />
-        </div>
-        <div>
-          <label htmlFor="subject" className="block text-sm font-medium text-audrey-text mb-1">
-            Asunto
-          </label>
-          <select
-            id="subject"
-            name="subject"
-            value={formData.subject}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-audrey-earth-light rounded-md focus:ring-2 focus:ring-audrey-green focus:border-transparent outline-none transition"
-          >
-            <option value="">Selecciona una opción</option>
-            <option value="acompañamiento">Acompañamiento Energético</option>
-            <option value="peluqueria">Peluquería Consciente</option>
-            <option value="talleres">Talleres y Grupos</option>
-            <option value="otro">Otro</option>
-          </select>
-        </div>
+        <FormField
+          label="Teléfono"
+          name="phone"
+          type="tel"
+          value={formData.phone}
+          onChange={handleChange}
+        />
+        <FormField
+          label="Asunto"
+          name="subject"
+          type="select"
+          value={formData.subject}
+          onChange={handleChange}
+          options={subjectOptions}
+        />
       </div>
 
-      <div>
-        <label htmlFor="message" className="block text-sm font-medium text-audrey-text mb-1">
-          Mensaje <span className="text-red-500">*</span>
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          required
-          rows={6}
-          className="w-full px-4 py-2 border border-audrey-earth-light rounded-md focus:ring-2 focus:ring-audrey-green focus:border-transparent outline-none transition"
-        ></textarea>
-      </div>
+      <FormField
+        label="Mensaje"
+        name="message"
+        type="textarea"
+        value={formData.message}
+        onChange={handleChange}
+        required
+      />
 
       <div className="flex justify-end">
         <Button
