@@ -14,8 +14,8 @@ const ContactForm = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // LiveFormHQ form identifier - replace with your actual form ID/URL
-  const LIVEFORM_ENDPOINT = "https://api.liveformhq.com/v1/forms/YOUR_FORM_ID_HERE";
+  // LiveFormHQ form identifier - your actual form ID
+  const LIVEFORM_ENDPOINT = "https://api.liveformhq.com/v1/forms/bbadab9b-11af-416c-84c8-53e5fc81c8e6";
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
