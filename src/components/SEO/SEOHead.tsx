@@ -16,7 +16,7 @@ const SEOHead: React.FC<SEOProps> = ({
   title,
   description,
   keywords,
-  canonicalUrl = 'https://www.audreytessier.es',
+  canonicalUrl = '/',
   ogImage = '/lovable-uploads/a9582a4d-a398-4560-9bc6-cc040fd9026b.png',
   ogType = 'website',
   children
