@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Mail, Phone, MapPin, Clock, Instagram, Facebook } from 'lucide-react';
 import SectionTitle from '@/components/SectionTitle';

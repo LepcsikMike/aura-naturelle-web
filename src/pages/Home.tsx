@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -33,24 +32,24 @@ const Home = () => {
         description="Especialista en bienestar holístico y peluquería consciente en Madrid. Acompañamiento energético y emocional para reconectar con tu esencia natural."
         keywords="bienestar holístico, peluquería consciente, acompañamiento energético, bienestar integral, Madrid"
         canonicalUrl="/"
-      >
-        {/* Structured data for this specific page */}
-        <StructuredData 
-          type="WebPage" 
-          data={{
-            'name': 'Audrey Tessier | Bienestar Holístico',
-            'description': 'Especialista en bienestar holístico y peluquería consciente en Madrid',
-            'mainEntity': {
-              '@type': 'Service',
-              'name': 'Servicios de Bienestar Holístico',
-              'provider': {
-                '@type': 'LocalBusiness',
-                'name': 'Audrey Tessier'
-              }
+      />
+      
+      {/* Structured data for this specific page */}
+      <StructuredData 
+        type="WebPage" 
+        data={{
+          'name': 'Audrey Tessier | Bienestar Holístico',
+          'description': 'Especialista en bienestar holístico y peluquería consciente en Madrid',
+          'mainEntity': {
+            '@type': 'Service',
+            'name': 'Servicios de Bienestar Holístico',
+            'provider': {
+              '@type': 'LocalBusiness',
+              'name': 'Audrey Tessier'
             }
-          }}
-        />
-      </SEOHead>
+          }
+        }}
+      />
 
       <ParallaxHero />
 
