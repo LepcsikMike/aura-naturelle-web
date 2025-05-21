@@ -7,7 +7,8 @@ import AnimatedServiceCard from '@/components/AnimatedServiceCard';
 import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import ParallaxHero from '@/components/ParallaxHero';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet';
+import SEOHead from '@/components/SEO/SEOHead';
+import StructuredData from '@/components/SEO/StructuredData';
 
 const Home = () => {
   const testimonials = [{
@@ -27,15 +28,16 @@ const Home = () => {
   
   return <>
       {/* Add SEO-specific meta tags for this page */}
-      <Helmet>
-        <title>Audrey Tessier | Bienestar Holístico y Peluquería Consciente</title>
-        <meta name="description" content="Especialista en bienestar holístico y peluquería consciente en Madrid. Acompañamiento energético y emocional para reconectar con tu esencia natural." />
-        <meta name="keywords" content="bienestar holístico, peluquería consciente, acompañamiento energético, bienestar integral, Madrid" />
+      <SEOHead 
+        title="Audrey Tessier | Bienestar Holístico y Peluquería Consciente"
+        description="Especialista en bienestar holístico y peluquería consciente en Madrid. Acompañamiento energético y emocional para reconectar con tu esencia natural."
+        keywords="bienestar holístico, peluquería consciente, acompañamiento energético, bienestar integral, Madrid"
+        canonicalUrl="/"
+      >
         {/* Structured data for this specific page */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'WebPage',
+        <StructuredData 
+          type="WebPage" 
+          data={{
             'name': 'Audrey Tessier | Bienestar Holístico',
             'description': 'Especialista en bienestar holístico y peluquería consciente en Madrid',
             'mainEntity': {
@@ -46,9 +48,9 @@ const Home = () => {
                 'name': 'Audrey Tessier'
               }
             }
-          })}
-        </script>
-      </Helmet>
+          }}
+        />
+      </SEOHead>
 
       <ParallaxHero />
 
