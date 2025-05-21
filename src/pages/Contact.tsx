@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { Mail, Phone, MapPin, Clock, Instagram, Facebook } from 'lucide-react';
 import SectionTitle from '@/components/SectionTitle';
 import ContactForm from '@/components/ContactForm';
 import SEOHead from '@/components/SEO/SEOHead';
+import StructuredData from '@/components/SEO/StructuredData';
 
 const Contact = () => {
   return <>
@@ -12,24 +14,26 @@ const Contact = () => {
         keywords="contacto, bienestar holístico, peluquería consciente, Madrid, acompañamiento energético"
         canonicalUrl="/contacto"
       >
-        {/* Additional contact page structured data */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'ContactPage',
-            'mainEntity': {
-              '@type': 'Organization',
-              'name': 'Audrey Tessier - Bienestar Holístico',
-              'contactPoint': {
-                '@type': 'ContactPoint',
-                'telephone': '+34600000000',
-                'email': 'info@audreytessier.es',
-                'contactType': 'customer service'
-              }
-            }
-          })}
-        </script>
+        {/* Additional contact page structured data is now handled separately */}
       </SEOHead>
+      
+      <StructuredData 
+        type="WebPage" 
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'ContactPage',
+          'mainEntity': {
+            '@type': 'Organization',
+            'name': 'Audrey Tessier - Bienestar Holístico',
+            'contactPoint': {
+              '@type': 'ContactPoint',
+              'telephone': '+34600000000',
+              'email': 'info@audreytessier.es',
+              'contactType': 'customer service'
+            }
+          }
+        }}
+      />
 
       <section className="pt-28 pb-16 bg-audrey-green/30">
         <div className="container-custom">
