@@ -1,0 +1,22 @@
+
+# Custom 404 error page
+ErrorDocument 404 /index.html
+
+# Enable rewrite engine
+RewriteEngine On
+
+# Set base
+RewriteBase /
+
+# Redirect from non-www to www
+RewriteCond %{HTTP_HOST} ^audreytessier\.es [NC]
+RewriteRule ^(.*)$ https://www.audreytessier.es/$1 [L,R=301]
+
+# Redirect from HTTP to HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Handle client-side routing
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]

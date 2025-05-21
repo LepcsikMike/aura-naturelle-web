@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -6,6 +7,8 @@ import AnimatedServiceCard from '@/components/AnimatedServiceCard';
 import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import ParallaxHero from '@/components/ParallaxHero';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet';
+
 const Home = () => {
   const testimonials = [{
     quote: "Audrey no solo cuida mi cabello de forma extraordinaria, sino que cada sesión con ella es un regalo para mi bienestar general. Su enfoque consciente marca la diferencia.",
@@ -21,7 +24,32 @@ const Home = () => {
     name: "Ana González",
     role: "Clienta desde 2021"
   }];
+  
   return <>
+      {/* Add SEO-specific meta tags for this page */}
+      <Helmet>
+        <title>Audrey Tessier | Bienestar Holístico y Peluquería Consciente</title>
+        <meta name="description" content="Especialista en bienestar holístico y peluquería consciente en Madrid. Acompañamiento energético y emocional para reconectar con tu esencia natural." />
+        <meta name="keywords" content="bienestar holístico, peluquería consciente, acompañamiento energético, bienestar integral, Madrid" />
+        {/* Structured data for this specific page */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebPage',
+            'name': 'Audrey Tessier | Bienestar Holístico',
+            'description': 'Especialista en bienestar holístico y peluquería consciente en Madrid',
+            'mainEntity': {
+              '@type': 'Service',
+              'name': 'Servicios de Bienestar Holístico',
+              'provider': {
+                '@type': 'LocalBusiness',
+                'name': 'Audrey Tessier'
+              }
+            }
+          })}
+        </script>
+      </Helmet>
+
       <ParallaxHero />
 
       <section className="section-padding relative bg-audrey-cream overflow-hidden">
@@ -102,7 +130,14 @@ const Home = () => {
             }} transition={{
               duration: 0.8
             }}>
-                <img alt="Audrey Tessier portrait" className="object-cover w-full shadow-xl rounded-lg" src="/lovable-uploads/21d3c4f5-69e3-4be8-a2dd-ab86039ce555.jpg" />
+                <img 
+                  alt="Audrey Tessier - Especialista en bienestar holístico" 
+                  className="object-cover w-full shadow-xl rounded-lg" 
+                  src="/lovable-uploads/21d3c4f5-69e3-4be8-a2dd-ab86039ce555.jpg"
+                  loading="lazy"
+                  width="400"
+                  height="600" 
+                />
               </motion.div>
             </div>
             <div className="md:col-span-3">

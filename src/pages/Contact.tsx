@@ -1,9 +1,37 @@
+
 import React from 'react';
 import { Mail, Phone, MapPin, Clock, Instagram, Facebook } from 'lucide-react';
 import SectionTitle from '@/components/SectionTitle';
 import ContactForm from '@/components/ContactForm';
+import SEOHead from '@/components/SEO/SEOHead';
+
 const Contact = () => {
   return <>
+      <SEOHead 
+        title="Contacto | Audrey Tessier - Bienestar Holístico"
+        description="Ponte en contacto con Audrey Tessier para sesiones de acompañamiento energético, peluquería consciente o cualquier consulta sobre bienestar holístico en Madrid."
+        keywords="contacto, bienestar holístico, peluquería consciente, Madrid, acompañamiento energético"
+        canonicalUrl="/contacto"
+      >
+        {/* Additional contact page structured data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'ContactPage',
+            'mainEntity': {
+              '@type': 'Organization',
+              'name': 'Audrey Tessier - Bienestar Holístico',
+              'contactPoint': {
+                '@type': 'ContactPoint',
+                'telephone': '+34600000000',
+                'email': 'info@audreytessier.es',
+                'contactType': 'customer service'
+              }
+            }
+          })}
+        </script>
+      </SEOHead>
+
       <section className="pt-28 pb-16 bg-audrey-green/30">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
